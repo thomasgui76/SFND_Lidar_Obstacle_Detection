@@ -106,13 +106,16 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
   pcl::PointCloud<pcl::PointXYZI>::Ptr filterCloud = pointProcessorI->FilterCloud(inputCloud, 0.4f, Eigen::Vector4f (-10, -10, -5, 1), Eigen::Vector4f (15, 15, 5, 1));
   // renderPointCloud(viewer,inputCloud,"inputCloud");
   renderPointCloud(viewer,filterCloud,"filterCloud");
-  
-  std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->SegmentPlane(filterCloud, 100, 0.2);
+  std::cout<<"filtering completed"<<std::endl;
+  // std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->SegmentPlane(filterCloud, 100, 0.2);
+  std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->RansacPlane(filterCloud, 100, 0.2);
+  std::cout<<"RansacPlane completed"<<std::endl;
   renderPointCloud(viewer, segmentCloud.first,"obstCloud", Color(1,0,0));
   renderPointCloud(viewer, segmentCloud.second,"planeCloud", Color(0,1,0));
-
   
-  std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->Clustering(segmentCloud.first, 0.6, 8, 300);
+  // std::cout<<"call kdClustering function"<<std::endl;
+  // std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->Clustering(segmentCloud.first, 0.6, 8, 300);
+  std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->kdClustering(segmentCloud.first, 0.6, 8, 300);
     int clusterId = 0;
     std::vector<Color> colors = {Color(1,0,0),Color(1,1,0),Color(0,0,1)};
 
@@ -176,13 +179,13 @@ int main (int argc, char** argv)
     
     // simpleHighway(viewer);
     // cityBlock(viewer);
-
+    
     while (!viewer->wasStopped ())
     {
         
         viewer->removeAllPointClouds();
         viewer->removeAllShapes();
-
+        
         // load pcd file and run osbtacle detection process
         inputCloudI = pointProcessorI->loadPcd((*streamIterator).string());
         cityBlock(viewer, pointProcessorI, inputCloudI);
@@ -191,5 +194,9 @@ int main (int argc, char** argv)
             streamIterator = stream.begin();
         
         viewer->spinOnce ();
+        
     } 
+    
+
+    // return 0;
 }

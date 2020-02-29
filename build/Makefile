@@ -150,6 +150,33 @@ src/environment.cpp.s:
 	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/environment.cpp.s
 .PHONY : src/environment.cpp.s
 
+src/kdTreeCluster.o: src/kdTreeCluster.cpp.o
+
+.PHONY : src/kdTreeCluster.o
+
+# target to build an object file
+src/kdTreeCluster.cpp.o:
+	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/kdTreeCluster.cpp.o
+.PHONY : src/kdTreeCluster.cpp.o
+
+src/kdTreeCluster.i: src/kdTreeCluster.cpp.i
+
+.PHONY : src/kdTreeCluster.i
+
+# target to preprocess a source file
+src/kdTreeCluster.cpp.i:
+	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/kdTreeCluster.cpp.i
+.PHONY : src/kdTreeCluster.cpp.i
+
+src/kdTreeCluster.s: src/kdTreeCluster.cpp.s
+
+.PHONY : src/kdTreeCluster.s
+
+# target to generate assembly for a file
+src/kdTreeCluster.cpp.s:
+	$(MAKE) -f CMakeFiles/environment.dir/build.make CMakeFiles/environment.dir/src/kdTreeCluster.cpp.s
+.PHONY : src/kdTreeCluster.cpp.s
+
 src/processPointClouds.o: src/processPointClouds.cpp.o
 
 .PHONY : src/processPointClouds.o
@@ -216,6 +243,9 @@ help:
 	@echo "... src/environment.o"
 	@echo "... src/environment.i"
 	@echo "... src/environment.s"
+	@echo "... src/kdTreeCluster.o"
+	@echo "... src/kdTreeCluster.i"
+	@echo "... src/kdTreeCluster.s"
 	@echo "... src/processPointClouds.o"
 	@echo "... src/processPointClouds.i"
 	@echo "... src/processPointClouds.s"

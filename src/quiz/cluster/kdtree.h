@@ -37,9 +37,9 @@ struct KdTree
 			// Calculate current depth
         	uint cd = depth%2;
 			if (point[cd] < ((*node)->point[cd]))
-				insertHelper(&((*node)->left), cd, point, id);
+				insertHelper(&((*node)->left), depth+1, point, id);
 			else
-				insertHelper(&((*node)->right), cd, point, id);				
+				insertHelper(&((*node)->right), depth+1, point, id);				
       	}
 
 	}
@@ -50,11 +50,11 @@ struct KdTree
 		insertHelper(&root, 0, point, id);
 
 	}
-
+	
 	void searchHelper(std::vector<float> target, Node* node, int depth, float distanceTol, std::vector<int>& ids){
 		if (node!=NULL ){
-			if((node->point[0]>=target[0]-distanceTol)&&(node->point[0]<target[0]+distanceTol)&&
-			(node->point[1]>=target[1]-distanceTol)&&(node->point[1]<target[1]+distanceTol)){
+			if((node->point[0]>=target[0]-distanceTol)&&(node->point[0]<=target[0]+distanceTol)&&
+			(node->point[1]>=target[1]-distanceTol)&&(node->point[1]<=target[1]+distanceTol)){
 				float distance = sqrt((node->point[0]-target[0])*(node->point[0]-target[0])+(node->point[1]-target[1])*(node->point[1]-target[1]));
 				if(distance<=distanceTol)
 					ids.push_back(node->id);
